@@ -1,16 +1,13 @@
-function refreshPage(){
-   const axios = require('axios');
-
-   var intervalId = window.setInterval(function(){
-      axios
-         .get('https://google.com')
-         .then(res => {
-            console.log(`statusCode: ${res.status}`);
-            console.log(res);
-         })
-         .catch(error => {
-            console.error(error);
+function updateTemp(){
+   $.get("tempdata.txt", function(data) {
+      $('#temperatureOutput').html(data);
+      document.getElementById("temperatureOutput").innerHTML = data;
+      console.log(data);
    });
-
-   }, 5000);
 }
+
+window.addEventListener('load', (event) => {
+   console.log('Window loaded');
+   updateTemp();
+   console.log("Temperature updated");
+});
