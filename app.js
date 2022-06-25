@@ -1,4 +1,4 @@
-function updateTemp(){
+function updateData(){
    $.get("data.txt", function(data) {
       $('#temperatureOutput').html(data);
       document.getElementById("temperatureOutput").innerHTML = data;
