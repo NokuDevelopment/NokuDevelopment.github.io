@@ -1,0 +1,3 @@
+Data storage format:
+
+server-push%rpi-status%temperature
