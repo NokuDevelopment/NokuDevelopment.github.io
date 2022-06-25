@@ -1,5 +1,5 @@
 function updateTemp(){
-   $.get("tempdata.txt", function(data) {
+   $.get("data.txt", function(data) {
       $('#temperatureOutput').html(data);
       document.getElementById("temperatureOutput").innerHTML = data;
       console.log(data);
