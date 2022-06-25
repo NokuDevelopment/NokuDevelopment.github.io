@@ -22,7 +22,7 @@ def GetAvgTime():
     global t2
     t1 = t2
     t2 = time.perf_counter()
-    Data.RPI_Polling_Period = round((t2 - t1), 2)
+    Data.RPI_Polling_Period = round(((t2 - t1) * 1000), 2)
 
 def runmain():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -55,17 +55,15 @@ def runmain():
                     n = 1
 
 
-                outputFile = open("data.txt", "w")
-                outputFile.write(usabledata)
-                outputFile.close()
-
-
 def UpdateFile():
     # Format data as: time%rpi-status%rpi-polling-period%temperature\
     now = datetime.now()
     today = datetime.today()
     timeString = f'{now.strftime("%H:%M %p")} on {today.strftime("%m/%d/%y")}'
-    output = f'{timeString}%{Data.RPI_Status}%{Data.RPI_Polling_Period}%{Data.RPI_Temperature}'
+    output = f'{timeString}%{Data.RPI_Status}%{Data.RPI_Polling_Period}ms%{Data.RPI_Temperature}'
+    outputFile = open("data.txt", 'w')
+    outputFile.write(output)
+    outputFile.close()
     print(f'File Update Output: {output}')
 
 def runserver():

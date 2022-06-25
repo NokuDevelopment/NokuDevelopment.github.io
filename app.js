@@ -1,10 +1,12 @@
 function updateData(){
    $.get("data.txt", function(data) {
       const fileDataArray = data.split("%");
-      $('#lastUpdate').html(fileDataArray[0]);
-      $('#RPIStatus').html(fileDataArray[1]);
-      $('#RPIPollingPeriod').html(fileDataArray[2]);
-      $('#temperatureOutput').html(fileDataArray[3]);
+      document.getElementById('lastUpdate').innerHTML = fileDataArray[0];
+      document.getElementById('RPIStatus').innerHTML = fileDataArray[1];
+      document.getElementById('RPIPollingPeriod').innerHTML = fileDataArray[2];
+      console.log(fileDataArray[2]);
+      console.log(fileDataArray[3]);
+      document.getElementById('temperatureOutput').innerHTML = fileDataArray[3];
    });
 }
 
