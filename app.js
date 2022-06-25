@@ -6,8 +6,12 @@ function updateData(){
    });
 }
 
+function updateData(){
+   $.get("data.txt", function(data) {
+      
+   });
+}
+
 window.addEventListener('load', (event) => {
-   console.log('Window loaded');
-   updateTemp();
-   console.log("Temperature updated");
+   updateData();
 });
