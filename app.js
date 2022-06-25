@@ -1,14 +1,10 @@
 function updateData(){
    $.get("data.txt", function(data) {
-      $('#temperatureOutput').html(data);
-      document.getElementById("temperatureOutput").innerHTML = data;
-      console.log(data);
-   });
-}
-
-function updateData(){
-   $.get("data.txt", function(data) {
-      
+      const fileDataArray = data.split("%");
+      $('#lastUpdate').html(fileDataArray[0]);
+      $('#RPIStatus').html(fileDataArray[1]);
+      $('#RPIPollingPeriod').html(fileDataArray[2]);
+      $('#temperatureOutput').html(fileDataArray[3]);
    });
 }
 
