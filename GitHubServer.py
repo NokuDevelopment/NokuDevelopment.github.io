@@ -30,7 +30,6 @@ def GetAvgTime():  # Return average time elapsed between socket pings
     t2 = time.perf_counter()
     Data.RPI_Polling_Period = round(((t2 - t1) * 1000), 2)
 
-
 def Main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('', SocketData.PORT))
