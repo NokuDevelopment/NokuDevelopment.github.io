@@ -19,6 +19,8 @@ class Data:
     RPI_Temperature = 0
     PreviousTemperatureData = []  # Temperature data from the past 8 hours
     TemperatureHistoryTimeStamps = []  # The time of submission of elements in PreviousTemperatureData
+    HalfHourTemperatureAverage = 0.00 # 30 minute average; reset with every update to PreviousTemperatureData
+    HalfHourTemperatureAverageDataPoints = 0  # Number of data points, used to calculate average
 
 
 t1 = 0
@@ -38,9 +40,14 @@ def UpdateRPITemperature(temperature):
     except:
         Data.RPI_Temperature = temperature[0:5]
 
+    Data.HalfHourTemperatureAverage = Data.HalfHourTemperatureAverage + float(temperature)
+    Data.HalfHourTemperatureAverageDataPoints = Data.HalfHourTemperatureAverageDataPoints + 1
+
     if Data.TemperatureHistoryTimeStamps[len(Data.TemperatureHistoryTimeStamps) - 1] <= (datetime.now() - timedelta(minutes=30)):
+        HalfHourAverage = float(Data.HalfHourTemperatureAverage) / float(Data.HalfHourTemperatureAverageDataPoints)
+
         Data.TemperatureHistoryTimeStamps.append(datetime.now())
-        Data.PreviousTemperatureData.append(temperature)
+        Data.PreviousTemperatureData.append(HalfHourAverage)
         del Data.PreviousTemperatureData[0]
         del Data.TemperatureHistoryTimeStamps[0]
 
@@ -52,6 +59,9 @@ def UpdateRPITemperature(temperature):
         backupFile = open("backup.txt", 'w')
         backupFile.write(tempString)
         backupFile.close()
+
+        Data.HalfHourTemperatureAverage = 0.00
+        Data.HalfHourTemperatureAverageDataPoints = 0
 
 def Main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
