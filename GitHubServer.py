@@ -72,8 +72,6 @@ def Main():
                 rawSocketData = str(data).split("'")
                 usableData = rawSocketData[1]
 
-                print(usableData)
-
                 UpdateRPITemperature(usableData)
 
                 # Only run GetAvgTime occasionally to minimize resource usage
