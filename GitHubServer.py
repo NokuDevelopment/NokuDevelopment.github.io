@@ -44,6 +44,17 @@ def UpdateRPITemperature(temperature):
         del Data.PreviousTemperatureData[0]
         del Data.TemperatureHistoryTimeStamps[0]
 
+        tempString = ''
+        timeString = ''
+        for s in Data.PreviousTemperatureData:
+            tempString = tempString + s + "$"
+        for s in Data.TemperatureHistoryTimeStamps:
+            timeString = timeString + s + "$"
+
+        backupFile = open("backup.txt", 'w')
+        backupFile.write((tempString + "$" + timeString))
+        backupFile.close()
+
 def Main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('', SocketData.PORT))
@@ -88,7 +99,7 @@ def UpdateFile():
 
     previousTempDataString = ""
     for s in Data.PreviousTemperatureData:
-        previousTempDataString = previousTempDataString + "$" + str(s)
+        previousTempDataString = previousTempDataString + str(s) + "$"
     previousTempDataString.removesuffix("$")
 
     resultString = f'{timeString}%{Data.RPI_Status}%{Data.RPI_Polling_Period}ms%{Data.RPI_Temperature}%{previousTempDataString}'
@@ -130,13 +141,12 @@ def AttemptRecoverData():
     backupFile.close()
 
     try:
-        backupArr = backupData.split('%')
-        tempDataArr = backupArr[0].split('$')
-        timeDataArr = backupArr[1].split('$')
+        tempDataArr = backupData.split('$%)
         for s in tempDataArr:
             Data.PreviousTemperatureData.append(s)
             del Data.PreviousTemperatureData[0]
-        
+    except:
+        pass
 
 
     outputFile = open("data.txt", 'w')
