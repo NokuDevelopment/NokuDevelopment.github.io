@@ -16,7 +16,8 @@ class Data:
     RPI_Status = "Disconnected"
     RPI_Polling_Period = 0
     RPI_Temperature = 0
-    PreviousTemperatureData = [] #temperature data from the past 8 hours
+    PreviousTemperatureData = [] # Temperature data from the past 8 hours
+    TemperatureHistoryTimeStamps = [] # The time of submission of elements in PreviousTemperatureData
 
 
 t1 = 0
@@ -29,6 +30,13 @@ def GetAvgTime():  # Return average time elapsed between socket pings
     t1 = t2
     t2 = time.perf_counter()
     Data.RPI_Polling_Period = round(((t2 - t1) * 1000), 2)
+
+def UpdateRPITemperature(temperature):
+    Data.RPI_Temperature = str(round(float(usabledata), 2))
+    Data.PreviousTemperatureData.append(usableData)
+    Data.TemperatureHistoryTimeStamps.append(datetime.now())
+
+    
 
 def Main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -51,13 +59,13 @@ def Main():
 
                 print(usableData)
 
-                Data.RPI_Temperature = str(round(float(usabledata), 2))
+                UpdateRPITemperature(usableData)
 
                 # Only run GetAvgTime occasionally to minimize resource usage
                 # Must be run two cycles in a row otherwise it will not report correctly
-                if n < 59:
+                if n < 9:
                     n = n + 1
-                elif n == 59:
+                elif n == 9:
                     n = n + 1
                     GetAvgTime()
                 else:
