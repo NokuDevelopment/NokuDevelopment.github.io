@@ -136,7 +136,7 @@ def PopulateLists():
         Data.TemperatureHistoryTimeStamps.append(datetime.now() - timedelta(hours=10))
         i = i + 1
 
-    recover = input('Recover from backup? Y/N')
+    recover = input('Recover from backup (Y/N)? ')
     if recover == 'y' or recover == 'Y':
         recoveryData = input('Enter backup file string: ')
         recoveryArr = recoveryData.split('%')
@@ -146,10 +146,10 @@ def PopulateLists():
             Data.PreviousTemperatureData[n] = recoveryArr[n]
             n = n + 1
 
+        print()
         print('Data recovery complete. Recovered data: ')
         print(f'{Data.PreviousTemperatureData}')
 
-    print()
     print()
 
 PopulateLists()
