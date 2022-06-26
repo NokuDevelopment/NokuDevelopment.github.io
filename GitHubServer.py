@@ -123,13 +123,20 @@ PopulateLists()
 
 # Attempt to extract backup information from backup.txt from previous execution
 # Useful in case of a crash (graph data isn't completely reset)
+# Format: temperature$data%time$data
 def AttemptRecoverData():
     backupFile = open("backup.txt", 'r')
     backupData = backupFile.read()
     backupFile.close()
 
     try:
-        temperatureData
+        backupArr = backupData.split('%')
+        tempDataArr = backupArr[0].split('$')
+        timeDataArr = backupArr[1].split('$')
+        for s in tempDataArr:
+            Data.PreviousTemperatureData.append(s)
+            del Data.PreviousTemperatureData[0]
+        
 
 
     outputFile = open("data.txt", 'w')
