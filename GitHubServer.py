@@ -80,12 +80,15 @@ def Main():
 
 
 def UpdateFile():
-    # Format data as: time%rpi-status%rpi-polling-period%temperature
+    # Format data as: time%rpi-status%rpi-polling-period%temperature%previous$temp$data
     currentTime = datetime.now()
     currentDate = datetime.today()
     timeString = f'{currentTime.strftime("%I:%M %p")} on {currentDate.strftime("%m/%d/%y")}'
 
     previousTempDataString = ""
+    for s in Data.PreviousTemperatureData:
+        previousTempDataString = previousTempDataString + "$" + s
+    previousTempDataString.removesuffix("$")
 
     resultString = f'{timeString}%{Data.RPI_Status}%{Data.RPI_Polling_Period}ms%{Data.RPI_Temperature}%{previousTempDataString}'
 
