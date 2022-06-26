@@ -35,18 +35,19 @@
         function drawChart() {
           var data = google.visualization.arrayToDataTable([
             ['Time', 'Temperature'],
-            ['11:45', 77.34],
-            ['11:50', 78.90],
-            ['11:55', 80.04],
+            ['', 77.34],
+            ['', 78.90],
+            ['', 80.04],
             ['', 81.90],
-            ['12:05', 82.90],
-            ['12:10', 83.90],
-            ['12:15', 88.90],
-            ['12:20', 89.90],
-            ['12:25', 92.90]
+            ['', 82.90],
+            ['', 83.90],
+            ['', 88.90],
+            ['', 89.90],
+            ['', 92.90]
           ]);
 
           var options = {
+            title: 'Temperature (past 8 hrs.)',
             curveType: 'function',
             legend: {position: 'bottom'}
           };
