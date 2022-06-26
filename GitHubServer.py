@@ -5,6 +5,7 @@ from tkinter import *
 import threading
 import psutil
 from datetime import datetime
+from datetime import timedelta
 
 
 class SocketData:
