@@ -46,8 +46,7 @@ function drawChart(dataString, currentTemp){
       ['', dataArray[12]],
       ['', dataArray[13]],
       ['', dataArray[14]],
-      ['', dataArray[15]],
-      ['', currentTemp]
+      ['', dataArray[15]]
       ]);
 
       var options = {

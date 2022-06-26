@@ -98,7 +98,7 @@ def UpdateFile():
     previousTempDataString = ""
     for s in Data.PreviousTemperatureData:
         previousTempDataString = previousTempDataString + str(s) + "$"
-    previousTempDataString.removesuffix("$")
+    previousTempDataString = previousTempDataString[:-1]
 
     resultString = f'{timeString}%{Data.RPI_Status}%{Data.RPI_Polling_Period}ms%{Data.RPI_Temperature}%{previousTempDataString}'
 
@@ -148,9 +148,9 @@ def AttemptRecoverData():
 
 
     outputFile = open("data.txt", 'w')
-    outputFile.write(resultString)
+    outputFile.write()
     outputFile.close()
-
+AttemptRecoverData()
 
 print(f"Initializing server [ {datetime.now()} ]")
 RunServer()
