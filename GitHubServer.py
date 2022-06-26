@@ -63,6 +63,8 @@ def UpdateRPITemperature(temperature):
         Data.HalfHourTemperatureAverage = 0.00
         Data.HalfHourTemperatureAverageDataPoints = 0
 
+        print(f'Updated graph at {HalfHourAverage} ')
+
 def Main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('', SocketData.PORT))
@@ -70,6 +72,7 @@ def Main():
 
         conn, addr = s.accept()
         print(f"Connected to RPI [ {datetime.now()} ]")
+        print()
         Data.RPI_Status = "Connected"
 
         with conn:
@@ -114,7 +117,7 @@ def UpdateFile():
     outputFile.write(resultString)
     outputFile.close()
 
-    print(f'File Update Output: {resultString}')
+    #print(f'File Update Output: {resultString}')
 
 
 
