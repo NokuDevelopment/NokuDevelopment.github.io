@@ -63,7 +63,7 @@ def UpdateRPITemperature(temperature):
         Data.HalfHourTemperatureAverage = 0.00
         Data.HalfHourTemperatureAverageDataPoints = 0
 
-        print(f'Updated graph at {HalfHourAverage} ')
+        print(f'Updated graph ({HalfHourAverage}℉) at {datetime.now().strftime("%I:%M %p")}')
 
 def Main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -141,13 +141,23 @@ def PopulateLists():
 
     recover = input('Recover from backup (Y/N)? ')
     if recover == 'y' or recover == 'Y':
-        recoveryData = input('Enter backup file string: ')
-        recoveryArr = recoveryData.split('%')
+        try:
+            backupFile = open('backup.txt', 'r')
+            recoveryData = backupFile.read()
+            backupFile.close()
+            recoveryArr = recoveryData.split('%')
+            n = 0
+            while n < 15:
+                Data.PreviousTemperatureData[n] = recoveryArr[n]
+                n = n + 1
+        except:
+            recoveryData = input('Enter backup file string: ')
+            recoveryArr = recoveryData.split('%')
 
-        n = 0
-        while n < 15:
-            Data.PreviousTemperatureData[n] = recoveryArr[n]
-            n = n + 1
+            n = 0
+            while n < 15:
+                Data.PreviousTemperatureData[n] = recoveryArr[n]
+                n = n + 1
 
         print()
         print('Data recovery complete. Recovered data: ')
