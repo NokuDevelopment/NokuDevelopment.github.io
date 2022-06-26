@@ -34,6 +34,9 @@ def GetAvgTime():  # Return average time elapsed between socket pings
 def UpdateRPITemperature(temperature):
     Data.RPI_Temperature = str(round(float(usabledata), 2))
 
+    if Data.TemperatureHistoryTimeStamps[len(Data.TemperatureHistoryTimeStamps) - 1] < 
+
+
     if Data.TemperatureHistoryTimeStamps[0] <= (datetime.now() - timedelta(hours=8)):
         del Data.TemperatureHistoryTimeStamps[0]
         del Data.PreviousTemperatureData[0]
@@ -99,8 +102,15 @@ def RunServer():
         time.sleep(5)
 
 
-# Populate the data lists
+# Populate the previous temperature list
+def PopulateLists():
+    i = 0
+    while i < 15:
+        Data.PreviousTemperatureData.append(0)
+        Data.TemperatureHistoryTimeStamps.append(datetime.now - timedelta(hours=10))
+        i = i + 1
 
+PopulateLists()
 
 
 print(f"Initializing server [ {datetime.now()} ]")
