@@ -121,5 +121,21 @@ def PopulateLists():
 PopulateLists()
 
 
+# Attempt to extract backup information from backup.txt from previous execution
+# Useful in case of a crash (graph data isn't completely reset)
+def AttemptRecoverData():
+    backupFile = open("backup.txt", 'r')
+    backupData = backupFile.read()
+    backupFile.close()
+
+    try:
+        temperatureData
+
+
+    outputFile = open("data.txt", 'w')
+    outputFile.write(resultString)
+    outputFile.close()
+
+
 print(f"Initializing server [ {datetime.now()} ]")
 RunServer()
