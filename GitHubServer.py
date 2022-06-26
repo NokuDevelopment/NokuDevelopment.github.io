@@ -36,7 +36,9 @@ def UpdateRPITemperature(temperature):
     Data.PreviousTemperatureData.append(usableData)
     Data.TemperatureHistoryTimeStamps.append(datetime.now())
 
-    
+    if Data.TemperatureHistoryTimeStamps[0] <= (datetime.now() - timedelta(hours=8)):
+        del Data.TemperatureHistoryTimeStamps[0]
+        del Data.PreviousTemperatureData[0]
 
 def Main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
