@@ -22,7 +22,7 @@ function updateData(){
 function drawChart(dataString, currentTemp){
    const dataStringArray = dataString.split('$');
    const dataArray = []
-   for(i = 0; i < length(dataStringArray); i++){
+   for(i = 0; i < dataStringArray.length; i++){
       dataArray.push(parseFloat(dataStringArray[i]));
    }
 

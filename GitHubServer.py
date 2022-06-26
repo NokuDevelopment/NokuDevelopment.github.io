@@ -88,7 +88,7 @@ def UpdateFile():
 
     previousTempDataString = ""
     for s in Data.PreviousTemperatureData:
-        previousTempDataString = previousTempDataString + "$" + s
+        previousTempDataString = previousTempDataString + "$" + str(s)
     previousTempDataString.removesuffix("$")
 
     resultString = f'{timeString}%{Data.RPI_Status}%{Data.RPI_Polling_Period}ms%{Data.RPI_Temperature}%{previousTempDataString}'
@@ -97,7 +97,7 @@ def UpdateFile():
     outputFile.write(resultString)
     outputFile.close()
 
-    print(f'File Update Output: {output}')
+    print(f'File Update Output: {resultString}')
 
 
 def RunServer():
@@ -115,7 +115,7 @@ def PopulateLists():
     i = 0
     while i < 15:
         Data.PreviousTemperatureData.append(0)
-        Data.TemperatureHistoryTimeStamps.append(datetime.now - timedelta(hours=10))
+        Data.TemperatureHistoryTimeStamps.append(datetime.now() - timedelta(hours=10))
         i = i + 1
 
 PopulateLists()
