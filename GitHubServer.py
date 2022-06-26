@@ -16,7 +16,7 @@ class Data:
     RPI_Status = "Disconnected"
     RPI_Polling_Period = 0
     RPI_Temperature = 0
-    PreviousTemperatureData = []
+    PreviousTemperatureData = [] #temperature data from the past 8 hours
 
 
 t1 = 0
