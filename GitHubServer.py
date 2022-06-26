@@ -47,7 +47,7 @@ def UpdateRPITemperature(temperature):
         tempString = ''
         for s in Data.PreviousTemperatureData:
             tempString = tempString + str(s) + "%"
-        tempString.removesuffix("%")
+        tempString = tempString[:-1]
 
         backupFile = open("backup.txt", 'w')
         backupFile.write(tempString)
@@ -128,29 +128,6 @@ def PopulateLists():
         i = i + 1
 
 PopulateLists()
-
-
-# Attempt to extract backup information from backup.txt from previous execution
-# Useful in case of a crash (graph data isn't completely reset)
-# Format: temperature$data%time$data
-def AttemptRecoverData():
-    backupFile = open("backup.txt", 'r')
-    backupData = backupFile.read()
-    backupFile.close()
-
-    try:
-        tempDataArr = backupData.split('%')
-        for s in tempDataArr:
-            Data.PreviousTemperatureData.append(s)
-            del Data.PreviousTemperatureData[0]
-    except:
-        pass
-
-
-    outputFile = open("data.txt", 'w')
-    outputFile.write()
-    outputFile.close()
-AttemptRecoverData()
 
 print(f"Initializing server [ {datetime.now()} ]")
 RunServer()
