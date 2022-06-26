@@ -33,8 +33,6 @@ def GetAvgTime():  # Return average time elapsed between socket pings
 
 def UpdateRPITemperature(temperature):
     Data.RPI_Temperature = str(round(float(usabledata), 2))
-    Data.PreviousTemperatureData.append(usableData)
-    Data.TemperatureHistoryTimeStamps.append(datetime.now())
 
     if Data.TemperatureHistoryTimeStamps[0] <= (datetime.now() - timedelta(hours=8)):
         del Data.TemperatureHistoryTimeStamps[0]
@@ -99,6 +97,10 @@ def RunServer():
         Data.RPI_Status = "Disconnected"
         print(f"Attempting server restart- connection dropped [ {datetime.now()} ]")
         time.sleep(5)
+
+
+# Populate the data lists
+
 
 
 print(f"Initializing server [ {datetime.now()} ]")
