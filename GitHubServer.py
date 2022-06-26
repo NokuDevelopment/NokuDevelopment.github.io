@@ -45,14 +45,12 @@ def UpdateRPITemperature(temperature):
         del Data.TemperatureHistoryTimeStamps[0]
 
         tempString = ''
-        timeString = ''
         for s in Data.PreviousTemperatureData:
-            tempString = tempString + s + "$"
-        for s in Data.TemperatureHistoryTimeStamps:
-            timeString = timeString + s + "$"
+            tempString = tempString + str(s) + "%"
+        tempString.removesuffix("%")
 
         backupFile = open("backup.txt", 'w')
-        backupFile.write((tempString + "$" + timeString))
+        backupFile.write(tempString)
         backupFile.close()
 
 def Main():
@@ -141,7 +139,7 @@ def AttemptRecoverData():
     backupFile.close()
 
     try:
-        tempDataArr = backupData.split('$%)
+        tempDataArr = backupData.split('%')
         for s in tempDataArr:
             Data.PreviousTemperatureData.append(s)
             del Data.PreviousTemperatureData[0]
