@@ -16,8 +16,8 @@ class Data:
     RPI_Status = "Disconnected"
     RPI_Polling_Period = 0
     RPI_Temperature = 0
-    PreviousTemperatureData = [] # Temperature data from the past 8 hours
-    TemperatureHistoryTimeStamps = [] # The time of submission of elements in PreviousTemperatureData
+    PreviousTemperatureData = []  # Temperature data from the past 8 hours
+    TemperatureHistoryTimeStamps = []  # The time of submission of elements in PreviousTemperatureData
 
 
 t1 = 0
@@ -32,14 +32,16 @@ def GetAvgTime():  # Return average time elapsed between socket pings
     Data.RPI_Polling_Period = round(((t2 - t1) * 1000), 2)
 
 def UpdateRPITemperature(temperature):
-    Data.RPI_Temperature = str(round(float(usabledata), 2))
+    try:
+        Data.RPI_Temperature = str(round(float(temperature), 2))
+    except:
+        Data.RPI_Temperature = temperature[0:5]
 
-    if Data.TemperatureHistoryTimeStamps[len(Data.TemperatureHistoryTimeStamps) - 1] < 
-
-
-    if Data.TemperatureHistoryTimeStamps[0] <= (datetime.now() - timedelta(hours=8)):
-        del Data.TemperatureHistoryTimeStamps[0]
+    if Data.TemperatureHistoryTimeStamps[len(Data.TemperatureHistoryTimeStamps) - 1] <= (datetime.now() - timedelta(minutes=30)):
+        Data.TemperatureHistoryTimeStamps.append(datetime.now())
+        Data.PreviousTemperatureData.append(temperature)
         del Data.PreviousTemperatureData[0]
+        del Data.TemperatureHistoryTimeStamps[0]
 
 def Main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -83,7 +85,9 @@ def UpdateFile():
     currentDate = datetime.today()
     timeString = f'{currentTime.strftime("%I:%M %p")} on {currentDate.strftime("%m/%d/%y")}'
 
-    resultString = f'{timeString}%{Data.RPI_Status}%{Data.RPI_Polling_Period}ms%{Data.RPI_Temperature}'
+    previousTempDataString = ""
+
+    resultString = f'{timeString}%{Data.RPI_Status}%{Data.RPI_Polling_Period}ms%{Data.RPI_Temperature}%{previousTempDataString}'
 
     outputFile = open("data.txt", 'w')
     outputFile.write(resultString)
