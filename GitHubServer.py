@@ -40,7 +40,10 @@ def runmain():
                 raw = str(data).split("'")
                 usabledata = raw[1]
                 print(usabledata)
-                Data.RPI_Temperature = str(round(float(usabledata), 2))
+                try:
+                    Data.RPI_Temperature = str(round(float(usabledata), 2))
+                except:
+                    Data.RPI_Temperature = usabledata[0:5]
 
                 # Only run GetAvgTime occasionally to minimize resource usage
                 # Must be run two cycles in a row otherwise it will not report correctly
