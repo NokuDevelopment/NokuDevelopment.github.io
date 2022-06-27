@@ -39,6 +39,7 @@ def UpdateRPITemperature(temperature):
         Data.RPI_Temperature = str(round(float(temperature), 2))
     except:
         Data.RPI_Temperature = temperature[0:5]
+        temperature = temperature[0:5]
 
     Data.HalfHourTemperatureAverage = Data.HalfHourTemperatureAverage + float(temperature)
     Data.HalfHourTemperatureAverageDataPoints = Data.HalfHourTemperatureAverageDataPoints + 1
