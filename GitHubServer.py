@@ -118,7 +118,7 @@ def UpdateFile():
     outputFile.write(resultString)
     outputFile.close()
 
-    #print(f'File Update Output: {resultString}')
+    print(f'File Update Output: {resultString}')
 
 
 
